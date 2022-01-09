@@ -3,7 +3,7 @@
 <package format="3">
   <name>behaviortree_ros</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
+  <description>A wrapper around BehaviorTree.CPP, it provides an API for ROS2 services and actions inside a BehaviorTree node.</description>
   <maintainer email="andreas.zachariae@hs-karlsruhe.de">Andreas Zachariae</maintainer>
   <license>TODO: License declaration</license>
 
