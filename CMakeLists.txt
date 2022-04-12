@@ -37,6 +37,8 @@ include_directories(
 
 target_link_libraries(behaviortree_ros_lib PUBLIC
   cpp_core::cpp_core_lib
+  PUBLIC rclcpp
+  PUBLIC rclcpp_action
   PUBLIC behaviortree_cpp_v3
 )
 
