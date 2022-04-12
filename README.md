@@ -6,6 +6,12 @@ It provides an easy to use API for ROS2 services and actions inside a BehaviorTr
 
 ![example_tree](https://d33wubrfki0l68.cloudfront.net/f8b2bac65168251a46ec25232f20db7961327ffc/88ad1/images/readthedocs.png)
 
+## Access token
+repository | user:token
+-----------|-----------
+behaviortree_ros | `project_240_bot:glpat-stK1tgiDxr44VV8X95r7`
+
+
 ## Deprecated ros_core Package
 
 `ros_core` will be removed because behaviortree functionalities were moved to `common/behaviortree_ros` and the cpp library is here in `cpp_core`
