@@ -33,12 +33,14 @@ add_library(behaviortree_ros_lib
 include_directories(
   include
   ${cpp_core_INCLUDE_DIRS}
+  ${rclcpp_INCLUDE_DIRS}
+  ${rclcpp_action_INCLUDE_DIRS}
 )
 
 target_link_libraries(behaviortree_ros_lib PUBLIC
   cpp_core::cpp_core_lib
-  PUBLIC rclcpp
-  PUBLIC rclcpp_action
+  PUBLIC ${rclcpp_LIBRARIES}
+  PUBLIC ${rclcpp_action_LIBRARIES}
   PUBLIC behaviortree_cpp_v3
 )
 
@@ -55,7 +57,7 @@ install(TARGETS behaviortree_ros_lib
 
 ament_export_include_directories(include)
 ament_export_targets(export_behaviortree_ros_lib HAS_LIBRARY_TARGET)
-ament_export_dependencies(BehaviorTree)
+ament_export_dependencies(behaviortree_cpp_v3)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
