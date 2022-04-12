@@ -37,7 +37,7 @@ include_directories(
 
 target_link_libraries(behaviortree_ros_lib PUBLIC
   cpp_core::cpp_core_lib
-  PUBLIC BehaviorTree::behaviortree_cpp_v3
+  PUBLIC behaviortree_cpp_v3
 )
 
 # Install library
