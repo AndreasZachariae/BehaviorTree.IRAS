@@ -19,7 +19,7 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_action REQUIRED)
-find_package(BehaviorTree REQUIRED)
+find_package(behaviortree_cpp_v3 REQUIRED)
 find_package(cpp_core REQUIRED)
 
 file (GLOB SOURCES_COMPONENTS src/components/*.cpp)
@@ -37,7 +37,7 @@ include_directories(
 
 target_link_libraries(behaviortree_ros_lib PUBLIC
   cpp_core::cpp_core_lib
-  PUBLIC BehaviorTree::behaviortree_cpp_v3
+  PUBLIC behaviortree_cpp_v3::behaviortree_cpp_v3
 )
 
 # Install library
@@ -52,7 +52,7 @@ install(TARGETS behaviortree_ros_lib
     INCLUDES DESTINATION include)
 
 ament_export_include_directories(include)
-ament_export_interfaces(export_behaviortree_ros_lib HAS_LIBRARY_TARGET)
+ament_export_targets(export_behaviortree_ros_lib HAS_LIBRARY_TARGET)
 ament_export_dependencies(BehaviorTree)
 
 if(BUILD_TESTING)
