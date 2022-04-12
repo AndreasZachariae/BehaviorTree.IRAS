@@ -27,7 +27,7 @@ rclcpp::Node::SharedPtr RosInterface::get_node_handle()
 
 RosInterface::RosInterface(const std::string &name) : Component(name)
 {
-    if (instance_count_++ == 0 && !rclcpp::is_initialized())
+    if (instance_count_++ == 0 && !rclcpp::ok())
     {
         init();
     }
