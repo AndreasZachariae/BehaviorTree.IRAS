@@ -58,6 +58,7 @@ install(TARGETS behaviortree_ros_lib
 ament_export_include_directories(include)
 ament_export_interfaces(export_behaviortree_ros_lib HAS_LIBRARY_TARGET)
 ament_export_dependencies(behaviortree_cpp_v3)
+ament_export_libraries(behaviortree_ros_lib)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
