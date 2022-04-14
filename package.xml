@@ -17,7 +17,7 @@
   <depend>rclcpp_action</depend>
   <depend>action_msgs</depend>
   <depend>cpp_core</depend>
-  <depend>BehaviorTreeV3</depend>
+  <depend>behaviortree_cpp_v3</depend>
 
   <export>
     <build_type>ament_cmake</build_type>
