@@ -121,10 +121,13 @@ private:
             {
                 progress_.set_fail("Goal canceled!");
             }
-            else if (result.code == rclcpp_action::ResultCode::ABORTED ||
-                     result.code == rclcpp_action::ResultCode::UNKNOWN)
+            else if (result.code == rclcpp_action::ResultCode::UNKNOWN)
             {
-                progress_.set_fail("Goal failed!");
+                progress_.set_fail("Goal failed! ResultCode: UNKNOWN");
+            }
+            else if (result.code == rclcpp_action::ResultCode::ABORTED)
+            {
+                progress_.set_fail("Goal failed! ResultCode: ABORTED");
             }
             else
             {
