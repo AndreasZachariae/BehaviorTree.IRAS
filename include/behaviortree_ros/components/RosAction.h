@@ -82,7 +82,6 @@ private:
 
     void on_halted() override
     {
-        progress_.set_step(0, "Reset");
         log("Action halted, try to cancel");
         try
         {

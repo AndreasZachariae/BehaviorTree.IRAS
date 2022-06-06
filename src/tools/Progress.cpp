@@ -18,6 +18,7 @@ void Progress::set_step(int step, const std::string &message)
     if (step >= 0 && step <= steps)
     {
         current_step = step;
+        Logger::global_instance.log(to_string());
     }
     else
     {
