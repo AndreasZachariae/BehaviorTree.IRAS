@@ -82,6 +82,7 @@ private:
 
     void on_halted() override
     {
+        progress_.set_step(0, "Reset");
         try
         {
             client_->async_cancel_goal(future_.get());
