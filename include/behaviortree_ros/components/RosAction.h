@@ -121,7 +121,8 @@ private:
 
             if (result.code == rclcpp_action::ResultCode::CANCELED)
             {
-                progress_.set_fail("Goal canceled!");
+                // progress_.set_fail("Goal canceled!");
+                progress_.set_step(0, "Goal canceled! Reset Action...");
             }
             else if (result.code == rclcpp_action::ResultCode::UNKNOWN)
             {
@@ -129,7 +130,8 @@ private:
             }
             else if (result.code == rclcpp_action::ResultCode::ABORTED)
             {
-                progress_.set_fail("Goal failed! ResultCode: ABORTED");
+                // progress_.set_fail("Goal aborted!");
+                progress_.set_step(0, "Goal aborted! Reset Action...");
             }
             else
             {
