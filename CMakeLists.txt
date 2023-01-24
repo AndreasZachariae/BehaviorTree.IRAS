@@ -20,7 +20,7 @@ find_package(ament_cmake REQUIRED)
 find_package(ament_index_cpp REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_action REQUIRED)
-find_package(BehaviorTreeV3 REQUIRED)
+find_package(behaviortree_cpp_v3 REQUIRED)
 find_package(cpp_core REQUIRED)
 
 file (GLOB SOURCES_COMPONENTS src/components/*.cpp)
@@ -58,7 +58,7 @@ install(TARGETS behaviortree_ros_lib
 
 ament_export_include_directories(include)
 ament_export_targets(export_behaviortree_ros_lib HAS_LIBRARY_TARGET)
-ament_export_dependencies(BehaviorTreeV3)
+ament_export_dependencies(behaviortree_cpp_v3)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
