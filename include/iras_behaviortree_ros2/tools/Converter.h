@@ -1,6 +1,6 @@
 /** *******************************************************
- * PeTRA - University of Applied Sciences Karlsruhe
- * Module : behaviortree_ros
+ * IRAS - University of Applied Sciences Karlsruhe
+ * Module : iras_behaviortree_ros2
  * Purpose : Provides conversion functions between datatypes
  *
  * @author Andreas Zachariae
@@ -8,14 +8,14 @@
  *********************************************************/
 #pragma once
 
-#include <cpp_core/default.h>
+#include <iras_behaviortree_ros2/default.h>
 
 #include <cmath>
 
 #include <behaviortree_cpp_v3/basic_types.h>
 
 /** NECESSARY!
- * This is called from the BT-framework when reading input ports. 
+ * This is called from the BT-framework when reading input ports.
  * Provides conversion from .xml-String to float.
  */
 template <>
@@ -24,7 +24,7 @@ inline float BT::convertFromString<float>(BT::StringView str)
     return std::stof(str.data());
 }
 
-class convert
+class Converter
 {
 public:
     static std::string ftos(std::string float_str)

@@ -1,14 +1,14 @@
 cmake_minimum_required(VERSION 3.5)
-project(behaviortree_ros)
+project(iras_behaviortree_ros2)
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)
   set(CMAKE_C_STANDARD 99)
 endif()
 
-# Default to C++14
+# Default to C++20
 if(NOT CMAKE_CXX_STANDARD)
-  set(CMAKE_CXX_STANDARD 14)
+  set(CMAKE_CXX_STANDARD 20)
 endif()
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
@@ -21,25 +21,24 @@ find_package(ament_index_cpp REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_action REQUIRED)
 find_package(behaviortree_cpp_v3 REQUIRED)
-find_package(cpp_core REQUIRED)
 
 file (GLOB SOURCES_COMPONENTS src/components/*.cpp)
 file (GLOB SOURCES_TOOLS src/tools/*.cpp)
+file (GLOB SOURCES_CORE src/core/*.cpp)
 
 add_library(behaviortree_ros_lib
   ${SOURCES_COMPONENTS}
   ${SOURCES_TOOLS}
+  ${SOURCES_CORE}
 )
 
 include_directories(
   include
-  ${cpp_core_INCLUDE_DIRS}
   ${rclcpp_INCLUDE_DIRS}
   ${rclcpp_action_INCLUDE_DIRS}
 )
 
 target_link_libraries(behaviortree_ros_lib 
-  PUBLIC cpp_core::cpp_core_lib
   PUBLIC ${rclcpp_LIBRARIES}
   PUBLIC ${rclcpp_action_LIBRARIES}
   PUBLIC BT::behaviortree_cpp_v3

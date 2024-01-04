@@ -1,6 +1,6 @@
 /** *******************************************************
- * PeTRA - University of Applied Sciences Karlsruhe
- * Module : behaviortree_ros
+ * IRAS - University of Applied Sciences Karlsruhe
+ * Module : iras_behaviortree_ros2
  * Purpose : Provides tracking of the progress for ROS action and service protocol
  *
  * @author Andreas Zachariae
@@ -9,7 +9,7 @@
  *********************************************************/
 #pragma once
 
-#include <cpp_core/default.h>
+#include <iras_behaviortree_ros2/default.h>
 
 class Progress
 {

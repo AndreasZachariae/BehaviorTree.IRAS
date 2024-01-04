@@ -1,6 +1,6 @@
 /** *******************************************************
- * PeTRA - University of Applied Sciences Karlsruhe
- * Module : behaviortree_ros
+ * IRAS - University of Applied Sciences Karlsruhe
+ * Module : iras_behaviortree_ros2
  * Purpose : Template for using the ROS2 action in the Behavior Tree framework
  *
  * @author Moritz Weisenböhler
@@ -9,13 +9,13 @@
  *********************************************************/
 #pragma once
 
-#include <cpp_core/default.h>
+#include <iras_behaviortree_ros2/default.h>
 
 #include <memory>
 
 #include <rclcpp_action/rclcpp_action.hpp>
 
-#include <behaviortree_ros/components/RosNode.h>
+#include <iras_behaviortree_ros2/components/RosNode.h>
 
 template <typename ActionT>
 class RosAction : public RosNode
@@ -31,6 +31,7 @@ protected:
     using FeedbackT = typename ActionT::Feedback;
     using ResultT = typename rclcpp_action::ClientGoalHandle<ActionT>::WrappedResult;
 
+    virtual std::string ros2_action_name() = 0;
     virtual void on_send(GoalT &goal) = 0;
     virtual void on_feedback(const std::shared_ptr<const FeedbackT>) {}
     virtual void on_result(const ResultT &result, const GoalT &goal) = 0;
@@ -47,14 +48,14 @@ private:
 
     BT::NodeStatus on_start() override
     {
-        log("Connecting to action server: " + ros_name());
+        log("Connecting to action server: " + ros2_action_name());
 
         client_ = rclcpp_action::create_client<ActionT>(
             get_node_handle()->get_node_base_interface(),
             get_node_handle()->get_node_graph_interface(),
             get_node_handle()->get_node_logging_interface(),
             get_node_handle()->get_node_waitables_interface(),
-            ros_name());
+            ros2_action_name());
 
         return BT::NodeStatus::RUNNING;
     }
@@ -97,7 +98,7 @@ private:
     {
         OptionsT options = OptionsT();
 
-        options.goal_response_callback = [&](std::shared_future<std::shared_ptr<rclcpp_action::ClientGoalHandle<ActionT>>>)
+        options.goal_response_callback = [&](std::shared_ptr<rclcpp_action::ClientGoalHandle<ActionT>>)
         {
             if (!future_.get())
             {

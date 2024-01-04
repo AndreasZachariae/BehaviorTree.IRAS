@@ -1,6 +1,6 @@
 /** *******************************************************
- * PeTRA - University of Applied Sciences Karlsruhe
- * Module : behaviortree_ros
+ * IRAS - University of Applied Sciences Karlsruhe
+ * Module : iras_behaviortree_ros2
  * Purpose : Template for using the ROS2 service in the Behavior Tree framework
  *
  * @author Moritz Weisenböhler
@@ -9,13 +9,13 @@
  *********************************************************/
 #pragma once
 
-#include <cpp_core/default.h>
+#include <iras_behaviortree_ros2/default.h>
 
 #include <memory>
 
 // #include <rclcpp_action/rclcpp_action.hpp>
 
-#include <behaviortree_ros/components/RosNode.h>
+#include <iras_behaviortree_ros2/components/RosNode.h>
 
 template <typename ServiceT>
 class RosService : public RosNode
@@ -30,6 +30,7 @@ protected:
     using RequestT = typename ServiceT::Request;
     using ResponseT = typename ServiceT::Response;
 
+    virtual std::string ros2_service_name() = 0;
     virtual void on_send(std::shared_ptr<RequestT> request) = 0;
     virtual bool on_result(std::shared_future<std::shared_ptr<ResponseT>> response, std::shared_ptr<RequestT> request) = 0;
 
@@ -43,9 +44,9 @@ private:
 
     BT::NodeStatus on_start() override
     {
-        log("Connecting to service: " + ros_name());
+        log("Connecting to service: " + ros2_service_name());
 
-        client_ = RosNode::get_node_handle()->create_client<ServiceT>(ros_name());
+        client_ = RosNode::get_node_handle()->create_client<ServiceT>(ros2_service_name());
 
         return BT::NodeStatus::RUNNING;
     }
@@ -77,8 +78,8 @@ private:
 
         on_send(request_);
 
-        response_ = client_->async_send_request(request_, [this](std::shared_future<std::shared_ptr<ResponseT>>)
-                                                {
+        client_->async_send_request(request_, [this](std::shared_future<std::shared_ptr<ResponseT>>)
+                                    {
                                                     success_ = on_result(response_, request_);
 
                                                     progress_.next_step("Response received.");
@@ -86,8 +87,7 @@ private:
                                                     if (!success_)
                                                     {
                                                         progress_.set_fail("Service");
-                                                    }
-                                                });
+                                                    } });
 
         progress_.next_step("Request sent.");
     }
