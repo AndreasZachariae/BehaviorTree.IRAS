@@ -32,14 +32,14 @@ protected:
 
     virtual std::string ros2_service_name() = 0;
     virtual void on_send(std::shared_ptr<RequestT> request) = 0;
-    virtual bool on_result(std::shared_future<std::shared_ptr<ResponseT>> response, std::shared_ptr<RequestT> request) = 0;
+    virtual bool on_result(std::shared_ptr<ResponseT> response, std::shared_ptr<RequestT> request) = 0;
 
 private:
     Progress progress_;
 
     std::shared_ptr<rclcpp::Client<ServiceT>> client_;
     std::shared_ptr<RequestT> request_;
-    std::shared_future<std::shared_ptr<ResponseT>> response_;
+    std::shared_ptr<ResponseT> response_;
     bool success_ = true;
 
     BT::NodeStatus on_start() override
@@ -78,8 +78,9 @@ private:
 
         on_send(request_);
 
-        client_->async_send_request(request_, [this](std::shared_future<std::shared_ptr<ResponseT>>)
+        client_->async_send_request(request_, [this](std::shared_future<std::shared_ptr<ResponseT>> response_future_)
                                     {
+                                                    response_ = response_future_.get();
                                                     success_ = on_result(response_, request_);
 
                                                     progress_.next_step("Response received.");
