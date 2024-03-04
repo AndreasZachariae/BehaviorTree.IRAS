@@ -8,11 +8,13 @@
  *********************************************************/
 #pragma once
 
-#include <iras_behaviortree_ros2/default.h>
-
+#include <boost/algorithm/string/classification.hpp>
+#include <boost/algorithm/string/split.hpp>
 #include <cmath>
 
 #include <behaviortree_cpp_v3/basic_types.h>
+
+#include <iras_behaviortree_ros2/default.h>
 
 /** NECESSARY!
  * This is called from the BT-framework when reading input ports.
@@ -22,6 +24,26 @@ template <>
 inline float BT::convertFromString<float>(BT::StringView str)
 {
     return std::stof(str.data());
+}
+
+template <>
+inline std::vector<int> BT::convertFromString<std::vector<int>>(BT::StringView str)
+{
+    std::vector<int> result;
+    std::vector<std::string> parts;
+    boost::split(parts, str.data(), boost::is_any_of(";, "), boost::token_compress_on);
+    for (const auto &part : parts)
+    {
+        try
+        {
+            result.push_back(std::stoi(part));
+        }
+        catch (const std::exception &e)
+        {
+            throw BT::RuntimeError("Failed to convert string to vector<int>: " + std::string(e.what()));
+        }
+    }
+    return result;
 }
 
 class Converter
